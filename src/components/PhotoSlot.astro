@@ -7,6 +7,7 @@
 // mention « Photo à venir ».
 // Déposer le fichier au bon nom + rebuild suffit à afficher la photo.
 import fs from 'node:fs';
+import path from 'node:path';
 import WavySeparator from './WavySeparator.astro';
 import site from '../data/site.json';
 import ui from '../data/ui.json';
@@ -31,7 +32,10 @@ const {
   class: className,
 } = Astro.props;
 
-const exists = fs.existsSync(new URL(`../../public${image.src}`, import.meta.url));
+// Résolu depuis process.cwd() (racine du projet), pas depuis import.meta.url :
+// ce dernier n'est plus fiable une fois le composant regroupé par le build
+// statique (fonctionne en `astro dev`, casse silencieusement en `astro build`).
+const exists = fs.existsSync(path.join(process.cwd(), 'public', image.src));
 
 const [ratioW, ratioH] = ratio.split('/').map((n) => parseFloat(n));
 const largeur = ((placeholderHeight * ratioW) / ratioH).toFixed(2);
