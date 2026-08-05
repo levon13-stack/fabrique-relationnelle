@@ -1,0 +1,125 @@
+---
+import { getEntry, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import WavySeparator from '../../components/WavySeparator.astro';
+import SectionRow from '../../components/SectionRow.astro';
+import ContactCTA from '../../components/ContactCTA.astro';
+import PhotoSlot from '../../components/PhotoSlot.astro';
+import site from '../../data/site.json';
+import tarifs from '../../data/tarifs.json';
+
+// Photo partagée avec l'accueil (« 1-page accueil et page allemand »).
+const photoAmbiance = { src: site.photoAmbiance.src, alt: site.photoAmbiance.alt.de };
+
+const entry = await getEntry('pages', 'de');
+if (!entry) throw new Error('Contenu introuvable : src/content/pages/de.md');
+const { Content } = await render(entry);
+const { data } = entry;
+
+const prixAffiche = (tarif: { prix: string; duree: string }) =>
+  tarif.prix + (tarif.duree ? ` (${tarif.duree})` : '');
+---
+
+<Layout title={data.metaTitle} description={data.metaDescription} lang="de" withJsonLd>
+  <section class="hero container">
+    <div class="hero-text">
+      <h1>{data.title}</h1>
+      <p class="hero-sub">{data.sousTitre}</p>
+      <WavySeparator color="coral" width={148} />
+    </div>
+    <div class="hero-art">
+      <img
+        src={site.illustration.src}
+        alt={site.illustration.alt.de}
+        width={site.illustration.largeur}
+        height={site.illustration.hauteur}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+  </section>
+
+  <section class="ambiance container">
+    <figure class="ambiance-figure">
+      <PhotoSlot image={photoAmbiance} ratio="19 / 10" objectPosition="center 38%" lang="de" />
+    </figure>
+  </section>
+
+  <div class="container page-end">
+    <section class="split">
+      <h2>{data.introTitre}</h2>
+      <div class="split-body lead-block">
+        <Content />
+      </div>
+    </section>
+
+    {
+      data.sections.map((section) => (
+        <SectionRow section={section}>
+          {section.id === 'honorare' && (
+            <>
+              <dl class="price-list">
+                {tarifs.de.liste.map((tarif) => (
+                  <div class="price-row">
+                    <dt>{tarif.libelle}</dt>
+                    <dd class="price-val">{prixAffiche(tarif)}</dd>
+                  </div>
+                ))}
+              </dl>
+              {data.rubriques.honorareHinweis && (
+                <p class="mention">{data.rubriques.honorareHinweis}</p>
+              )}
+            </>
+          )}
+          {section.id === 'kontakt' && <ContactCTA lang="de" />}
+        </SectionRow>
+      ))
+    }
+  </div>
+</Layout>
+
+<style>
+  .hero {
+    display: grid;
+    gap: 2.5rem 4rem;
+    padding-block: clamp(3rem, 7vw, 5rem) clamp(2rem, 5vw, 3.5rem);
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+  }
+
+  .hero-sub {
+    margin-top: 1.2rem;
+    font-size: clamp(1.15rem, 1.05rem + 0.5vw, 1.35rem);
+    font-weight: 300;
+    line-height: 1.55;
+    max-width: 34ch;
+  }
+
+  .hero-art img {
+    width: min(100%, 30rem);
+    margin-inline: auto;
+  }
+
+  .ambiance {
+    margin-block: clamp(0.5rem, 2vw, 1.5rem) clamp(1rem, 3vw, 2rem);
+  }
+
+  .ambiance-figure {
+    margin: 0;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .page-end {
+    padding-bottom: var(--section);
+  }
+
+  :global(.split-body .encart) {
+    margin-top: 1.5rem;
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+// Rangée éditoriale asymétrique : titre à gauche, contenu à droite.
+// Rend une section structurée venant du frontmatter d'une page de contenu.
+interface Props {
+  section: {
+    id?: string;
+    titre: string;
+    paragraphes: string[];
+    items: string[];
+    sousTitre?: string;
+    itemsPro: string[];
+  };
+  num?: string;
+}
+
+const { section, num } = Astro.props;
+---
+
+<section class="split" id={section.id || undefined}>
+  <h2>
+    {num && <span class="split-num" aria-hidden="true">{num}</span>}
+    {section.titre}
+  </h2>
+  <div class="split-body">
+    {section.paragraphes.map((paragraphe) => <p>{paragraphe}</p>)}
+    {
+      section.items.length > 0 && (
+        <ul class="dash-list">
+          {section.items.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      )
+    }
+    {section.sousTitre && <h3>{section.sousTitre}</h3>}
+    {
+      section.itemsPro.length > 0 && (
+        <ul class="dash-list">
+          {section.itemsPro.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      )
+    }
+    <slot />
+  </div>
+</section>

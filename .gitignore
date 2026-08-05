@@ -1,0 +1,15 @@
+# Dépendances et build
+node_modules/
+dist/
+.astro/
+
+# Système
+.DS_Store
+
+# Journaux
+npm-debug.log*
+
+# Documents de travail (contenus sources, non publiés avec le site).
+# L'illustration servie par le site vit dans public/images/illustration.png.
+Récapitulatif final-final.docx
+/illustration.png

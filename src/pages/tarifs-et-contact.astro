@@ -1,0 +1,143 @@
+---
+import { getEntry, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import WavySeparator from '../components/WavySeparator.astro';
+import PhotoSlot from '../components/PhotoSlot.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import site from '../data/site.json';
+import tarifs from '../data/tarifs.json';
+
+const entry = await getEntry('pages', 'tarifs-et-contact');
+if (!entry) throw new Error('Contenu introuvable : src/content/pages/tarifs-et-contact.md');
+const { Content } = await render(entry);
+const { data } = entry;
+
+const prixAffiche = (tarif: { prix: string; duree: string }) =>
+  tarif.prix + (tarif.duree ? ` (${tarif.duree})` : '');
+---
+
+<Layout title={data.metaTitle} description={data.metaDescription}>
+  <div class="container page-end">
+    <header class="page-head">
+      <h1>{data.title}</h1>
+      <WavySeparator color="coral" width={148} />
+    </header>
+
+    <section class="tarifs-zone">
+      <h2>{data.rubriques.tarifs}</h2>
+      <dl class="price-list">
+        {
+          tarifs.fr.liste.map((tarif) => (
+            <div class="price-row">
+              <dt>{tarif.libelle}</dt>
+              <dd class="price-val">{prixAffiche(tarif)}</dd>
+              {tarif.note && <dd class="price-note">{tarif.note}</dd>}
+            </div>
+          ))
+        }
+      </dl>
+      {tarifs.fr.mention && <p class="mention">{tarifs.fr.mention}</p>}
+    </section>
+
+    <section class="contact-zone">
+      <div class="contact-main">
+        <!-- Photo du cabinet : public/images/contact-ambiance.jpg -->
+        {
+          data.photo && (
+            <PhotoSlot
+              image={data.photo}
+              ratio="3 / 2"
+              objectPosition="30% center"
+              class="contact-photo"
+            />
+          )
+        }
+        <div class="contact-texte">
+          <h2>{data.rubriques.contact}</h2>
+          <div class="measure">
+            <Content />
+          </div>
+          <ContactCTA />
+        </div>
+      </div>
+
+      <div class="cabinets">
+        <h2>{data.rubriques.cabinets}</h2>
+        <ul class="places">
+          {
+            site.cabinets.map((cabinet) => (
+              <li>
+                <span class="place-name">{cabinet.nom}</span>
+                {cabinet.nom === site.adresseMarseille.ville && (
+                  <span class="place-detail">
+                    {site.adresseMarseille.rue}
+                    <br />
+                    {site.adresseMarseille.codePostal} {site.adresseMarseille.ville}
+                  </span>
+                )}
+              </li>
+            ))
+          }
+          <li>
+            <span class="place-name">{site.visio.fr.nom}</span>
+            <span class="place-detail">{site.visio.fr.detail}</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .page-end {
+    padding-bottom: var(--section);
+  }
+
+  .tarifs-zone,
+  .contact-zone {
+    border-top: 1px solid var(--hairline);
+    padding-block: clamp(2.5rem, 5vw, 3.75rem);
+  }
+
+  .tarifs-zone h2,
+  .contact-zone h2 {
+    font-size: 1.45rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tarifs-zone .price-list,
+  .tarifs-zone .mention {
+    max-width: var(--measure);
+  }
+
+  /* Contact : photo « à l'écoute » + moyens de contact côte à côte */
+  .contact-main {
+    display: grid;
+    gap: 2.5rem 4rem;
+    align-items: start;
+  }
+
+  .contact-main :global(.contact-photo) {
+    border-radius: 14px;
+  }
+
+  @media (min-width: 900px) {
+    .contact-main {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    }
+
+    /* En deux colonnes seulement : la photo suit brièvement le défilement */
+    .contact-main :global(.contact-photo) {
+      position: sticky;
+      top: 1.5rem;
+    }
+  }
+
+  .contact-texte :global(.encart) {
+    margin-top: 2rem;
+  }
+
+  .cabinets {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  }
+</style>

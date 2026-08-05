@@ -1,0 +1,176 @@
+---
+// Pied de page commun : lockup, coordonnées cliquables, cabinets, pages
+// légales. Tout le contenu vient de src/data/ (site.json, ui.json).
+import WavySeparator from './WavySeparator.astro';
+import site from '../data/site.json';
+import ui from '../data/ui.json';
+
+interface Props {
+  lang?: 'fr' | 'de';
+}
+
+const { lang = 'fr' } = Astro.props;
+const t = ui[lang];
+const homeHref = lang === 'de' ? '/de/' : '/';
+const visio = site.visio[lang];
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <WavySeparator color="brown" width={96} />
+
+    <div class="cols">
+      <div class="brand">
+        <a class="lockup" href={homeHref} aria-label={t.homeAria}>
+          <img
+            src={site.illustration.src}
+            alt=""
+            width={site.illustration.largeur}
+            height={site.illustration.hauteur}
+            loading="lazy"
+          />
+          <span class="lockup-name">{site.nom}</span>
+        </a>
+        <p class="tagline">{site.sousTitre[lang]}</p>
+      </div>
+
+      <div class="col">
+        <p class="col-title">{t.footerContact}</p>
+        <ul>
+          <li>
+            <a href={site.telephone.lien}>{site.telephone.affichage}</a>
+          </li>
+          <li>
+            <a href={site.whatsapp.lien}>{site.whatsapp.label[lang]}</a>
+          </li>
+          <li>
+            {
+              site.email ? (
+                <a href={`mailto:${site.email}`}>{site.email}</a>
+              ) : (
+                <span class="placeholder">{site.emailPlaceholder}</span>
+              )
+            }
+            <!-- Pour activer le lien mailto : renseigner "email" dans src/data/site.json -->
+          </li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <p class="col-title">{t.footerCabinets}</p>
+        <ul>
+          {
+            site.cabinets.map((cabinet) => (
+              <li>
+                {cabinet.nom}
+                {cabinet.adresse && ` — ${cabinet.adresse}`}
+              </li>
+            ))
+          }
+          <li>{visio.nom}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="legal">
+      <nav aria-label={t.footerLegal}>
+        {site.pagesLegales.map((page) => <a href={page.href}>{page.label}</a>)}
+      </nav>
+      <p>© 2026 {site.nom}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--hairline);
+    padding-block: 2.75rem 2rem;
+    font-size: 0.95rem;
+  }
+
+  .cols {
+    display: grid;
+    gap: 2.25rem 3rem;
+    margin-top: 1.75rem;
+  }
+
+  @media (min-width: 760px) {
+    .cols {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 3.5fr) minmax(0, 3.5fr);
+    }
+  }
+
+  .lockup {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+  }
+
+  .lockup img {
+    height: 52px;
+    width: auto;
+  }
+
+  .lockup-name {
+    font-size: 0.67rem;
+    font-weight: 700;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    color: var(--brown);
+    white-space: nowrap;
+  }
+
+  .tagline {
+    margin: 1rem 0 0;
+    max-width: 24rem;
+    color: var(--brown-soft);
+  }
+
+  .col-title {
+    margin: 0 0 0.9rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brown-soft);
+  }
+
+  .col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .col li {
+    margin-bottom: 0.55em;
+  }
+
+  .placeholder {
+    color: var(--brown-soft);
+  }
+
+  .legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 2.75rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--hairline);
+    font-size: 0.88rem;
+    color: var(--brown-soft);
+  }
+
+  .legal nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.75rem;
+  }
+
+  .legal p {
+    margin: 0;
+  }
+</style>

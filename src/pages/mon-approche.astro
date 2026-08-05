@@ -1,0 +1,81 @@
+---
+import { getEntry, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import WavySeparator from '../components/WavySeparator.astro';
+
+const entry = await getEntry('pages', 'mon-approche');
+if (!entry) throw new Error('Contenu introuvable : src/content/pages/mon-approche.md');
+const { Content } = await render(entry);
+const { data } = entry;
+---
+
+<Layout title={data.metaTitle} description={data.metaDescription}>
+  <div class="container page-end">
+    <header class="page-head">
+      {data.kicker && <p class="kicker">{data.kicker}</p>}
+      <h1>{data.title}</h1>
+      <WavySeparator color="coral" width={148} />
+    </header>
+
+    <Content />
+
+    {
+      data.sections.map((section, i) => (
+        <section class="bloc">
+          <span class="bloc-num" aria-hidden="true">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <h2>{section.titre}</h2>
+          <div class="bloc-body">
+            {section.paragraphes.map((paragraphe) => (
+              <p>{paragraphe}</p>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</Layout>
+
+<style>
+  .page-end {
+    padding-bottom: var(--section);
+  }
+
+  /* Grandes sections numérotées : chiffre en corail contour, rythme ample */
+  .bloc {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: clamp(1.25rem, 3vw, 2rem);
+    border-top: 1px solid var(--hairline);
+    padding-block: clamp(2.75rem, 6vw, 4.25rem);
+  }
+
+  .bloc-num {
+    grid-column: 1;
+    font-size: clamp(2.9rem, 2rem + 3vw, 4.3rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--coral);
+  }
+
+  @supports (-webkit-text-stroke: 2px black) {
+    .bloc-num {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--coral);
+    }
+  }
+
+  .bloc h2 {
+    grid-column: 2;
+    font-size: clamp(1.45rem, 1.2rem + 1.2vw, 1.9rem);
+  }
+
+  .bloc-body {
+    grid-column: 2;
+    max-width: var(--measure);
+    margin-top: 1.3rem;
+  }
+</style>

@@ -1,0 +1,308 @@
+---
+// En-tête : lockup (illustration + nom), sélecteur de langue FR / DE,
+// navigation principale. Le menu mobile s'ouvre sans aucune animation.
+// Tout le contenu vient de src/data/ (site.json, navigation.json, ui.json).
+import site from '../data/site.json';
+import navigation from '../data/navigation.json';
+import ui from '../data/ui.json';
+
+interface Props {
+  lang?: 'fr' | 'de';
+}
+
+const { lang = 'fr' } = Astro.props;
+const t = ui[lang];
+const items = navigation[lang];
+const homeHref = lang === 'de' ? '/de/' : '/';
+
+const normalize = (p: string) => (p !== '/' && p.endsWith('/') ? p.slice(0, -1) : p);
+const currentPath = normalize(Astro.url.pathname);
+const isCurrent = (href: string) => !href.startsWith('#') && normalize(href) === currentPath;
+---
+
+<header class="site-header">
+  <div class="container top">
+    <a class="lockup" href={homeHref} aria-label={t.homeAria}>
+      <img
+        src={site.illustration.src}
+        alt=""
+        width={site.illustration.largeur}
+        height={site.illustration.hauteur}
+        loading="eager"
+      />
+      <span class="lockup-name">{site.nom}</span>
+    </a>
+
+    <div class="top-right">
+      <nav class="lang" aria-label={t.langLabel}>
+        <a href="/" hreflang="fr" aria-current={lang === 'fr' ? 'true' : undefined}>FR</a>
+        <span class="lang-sep" aria-hidden="true">/</span>
+        <a href="/de/" hreflang="de" lang="de" aria-current={lang === 'de' ? 'true' : undefined}
+          >DE</a
+        >
+      </nav>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        {t.menu}
+      </button>
+    </div>
+  </div>
+
+  <nav id="site-nav" class="site-nav" aria-label={t.navLabel}>
+    <ul class="container">
+      {
+        items.map((item) => (
+          <li>
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const button = document.querySelector('.nav-toggle');
+  const nav = document.getElementById('site-nav');
+
+  if (button && nav) {
+    button.addEventListener('click', () => {
+      const open = nav.classList.toggle('is-open');
+      button.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    // Sur la page allemande, refermer le menu après le choix d'une section.
+    nav.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      if (target.closest('a') && nav.classList.contains('is-open')) {
+        nav.classList.remove('is-open');
+        button.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.05rem 0.85rem;
+  }
+
+  /* Lockup : illustration au trait, nom en capitales dessous */
+  .lockup {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+  }
+
+  .lockup img {
+    height: 46px;
+    width: auto;
+  }
+
+  .lockup-name {
+    font-size: 0.67rem;
+    font-weight: 700;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    color: var(--brown);
+    white-space: nowrap;
+  }
+
+  .top-right {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+  }
+
+  .lang {
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+  }
+
+  .lang a {
+    text-decoration: none;
+    color: var(--brown-soft);
+    padding: 0.25em 0.1em;
+  }
+
+  .lang a:hover {
+    color: var(--coral-dark);
+  }
+
+  .lang a[aria-current] {
+    color: var(--brown);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--coral);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+  }
+
+  .lang-sep {
+    color: var(--brown-soft);
+    margin-inline: 0.15rem;
+  }
+
+  .nav-toggle {
+    display: none;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brown);
+    background: transparent;
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    padding: 0.55em 1em;
+    cursor: pointer;
+    transition: color 0.12s ease;
+  }
+
+  .nav-toggle:hover {
+    color: var(--coral-dark);
+  }
+
+  .site-nav {
+    border-top: 1px solid var(--hairline);
+  }
+
+  .site-nav ul {
+    list-style: none;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 1.9rem;
+    padding-block: 0.8rem;
+  }
+
+  .site-nav a {
+    display: inline-block;
+    padding-block: 0.15em;
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: var(--brown);
+  }
+
+  .site-nav a:hover {
+    color: var(--coral-dark);
+  }
+
+  .site-nav a[aria-current='page'] {
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--coral);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
+
+  @media (max-width: 899px) {
+    .nav-toggle {
+      display: inline-block;
+    }
+
+    .top {
+      gap: 1rem;
+    }
+
+    .top-right {
+      gap: 0.9rem;
+    }
+  }
+
+  /* Très petits écrans : resserrer le lockup pour que tout tienne */
+  @media (max-width: 480px) {
+    .lockup img {
+      height: 38px;
+    }
+
+    .lockup-name {
+      font-size: 0.56rem;
+      letter-spacing: 0.15em;
+    }
+
+    .nav-toggle {
+      padding: 0.5em 0.75em;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  /* Mobiles très étroits (ex. iPhone SE, 320px) : resserrer encore */
+  @media (max-width: 380px) {
+    .top {
+      gap: 0.6rem;
+    }
+
+    .top-right {
+      gap: 0.6rem;
+    }
+
+    .lockup img {
+      height: 32px;
+    }
+
+    .lockup-name {
+      font-size: 0.48rem;
+      letter-spacing: 0.1em;
+    }
+
+    .lang {
+      font-size: 0.78rem;
+    }
+
+    .nav-toggle {
+      padding: 0.45em 0.6em;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+    }
+  }
+
+  /* Filet de sécurité : si malgré tout ça ne tient pas sur une ligne
+     (écran extrême, zoom texte, futur libellé plus long), on passe sur
+     deux lignes plutôt que de couper un bouton hors de l'écran. */
+  .top {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+  }
+
+  .top-right {
+    margin-left: auto;
+  }
+
+  @media (max-width: 899px) {
+
+    .site-nav {
+      display: none;
+    }
+
+    .site-nav.is-open {
+      display: block;
+    }
+
+    .site-nav ul {
+      flex-direction: column;
+      gap: 0;
+      padding-block: 0.4rem 1rem;
+    }
+
+    .site-nav li + li {
+      border-top: 1px solid var(--hairline);
+    }
+
+    .site-nav a {
+      display: block;
+      padding-block: 0.7em;
+    }
+  }
+</style>

@@ -1,0 +1,12 @@
+{
+  "fr": {
+    "label": "Premier échange",
+    "mention": "20 minutes, sans frais, en visioconférence.",
+    "whatsapp": "WhatsApp"
+  },
+  "de": {
+    "label": "Erstgespräch",
+    "mention": "20 Minuten, kostenlos, per Videokonferenz.",
+    "whatsapp": "WhatsApp"
+  }
+}

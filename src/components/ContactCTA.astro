@@ -1,0 +1,107 @@
+---
+// Encart « premier échange » : aplat jaune sobre et contenu (pas pleine
+// largeur), texte brun (contraste ≈ 7,5:1). Téléphone et e-mail mis en
+// avant ; WhatsApp en simple lien texte. Aucun bouton, aucun formulaire.
+// Textes : src/data/cta.json — coordonnées : src/data/site.json.
+import site from '../data/site.json';
+import cta from '../data/cta.json';
+
+interface Props {
+  lang?: 'fr' | 'de';
+}
+
+const { lang = 'fr' } = Astro.props;
+const t = cta[lang];
+---
+
+<aside class="encart" aria-label={t.label}>
+  <p class="encart-label">{t.label}</p>
+  <p class="encart-mention">{t.mention}</p>
+  <p class="encart-tel">
+    <a class="tel" href={site.telephone.lien}>{site.telephone.affichage}</a>
+    <a class="wa" href={site.whatsapp.lien}>{t.whatsapp}</a>
+  </p>
+  <p class="encart-email">
+    {
+      site.email ? (
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      ) : (
+        <span class="placeholder">{site.emailPlaceholder}</span>
+      )
+    }
+    <!-- Pour activer le lien mailto : renseigner "email" dans src/data/site.json -->
+  </p>
+</aside>
+
+<style>
+  .encart {
+    background: var(--yellow);
+    color: var(--brown);
+    border-radius: 12px;
+    padding: 1.6rem 1.9rem 1.75rem;
+    max-width: 30rem;
+  }
+
+  .encart p {
+    margin: 0;
+  }
+
+  .encart-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .encart-mention {
+    margin-top: 0.3rem;
+    font-size: 0.98rem;
+  }
+
+  .encart-tel {
+    margin-top: 1.15rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 1.1rem;
+  }
+
+  .tel {
+    font-size: clamp(1.35rem, 1.2rem + 0.7vw, 1.6rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--brown);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .tel:hover {
+    color: #241710;
+  }
+
+  .wa {
+    font-size: 0.92rem;
+    color: var(--brown);
+    text-decoration-color: var(--brown);
+    text-decoration-thickness: 1px;
+  }
+
+  .wa:hover,
+  .encart-email a:hover {
+    color: #241710;
+  }
+
+  .encart-email {
+    margin-top: 0.55rem;
+    font-size: 0.95rem;
+  }
+
+  .encart-email a {
+    color: var(--brown);
+    text-decoration-color: var(--brown);
+  }
+
+  .placeholder {
+    border-bottom: 1px dashed var(--brown);
+  }
+</style>

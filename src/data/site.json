@@ -1,0 +1,57 @@
+{
+  "nom": "La Fabrique Relationnelle",
+  "nomDe": "Die Fabrique Relationnelle",
+  "sousTitre": {
+    "fr": "Coaching et accompagnement systémique — Aix-en-Provence et Marseille",
+    "de": "Systemisches Coaching und Begleitung — Aix-en-Provence und Marseille"
+  },
+  "telephone": {
+    "affichage": "07 44 94 66 40",
+    "lien": "tel:+33744946640"
+  },
+  "whatsapp": {
+    "lien": "https://wa.me/33744946640",
+    "label": {
+      "fr": "Écrire sur WhatsApp",
+      "de": "Über WhatsApp schreiben"
+    }
+  },
+  "email": "fabrique.relationnelle@gmail.com",
+  "emailPlaceholder": "[EMAIL À FOURNIR]",
+  "adresseMarseille": {
+    "rue": "44 rue Sainte",
+    "codePostal": "13001",
+    "ville": "Marseille",
+    "pays": "FR"
+  },
+  "cabinets": [
+    { "nom": "Aix-en-Provence", "adresse": "" },
+    { "nom": "Marseille", "adresse": "44 rue Sainte, 13001" }
+  ],
+  "visio": {
+    "fr": { "nom": "Visioconférence", "detail": "pour tous les accompagnements" },
+    "de": { "nom": "Videokonferenz", "detail": "für alle Begleitungen" }
+  },
+  "illustration": {
+    "src": "/images/illustration.png",
+    "largeur": 1492,
+    "hauteur": 1022,
+    "alt": {
+      "fr": "Illustration au trait : une personne la main posée sur le cœur, et deux personnes qui se tiennent la main",
+      "de": "Strichzeichnung: eine Person mit der Hand auf dem Herzen und zwei Personen, die sich an der Hand halten"
+    }
+  },
+  "photoAmbiance": {
+    "src": "/images/accueil-ambiance.jpg",
+    "alt": {
+      "fr": "Sabine dans son cabinet, entourée de livres",
+      "de": "Sabine in ihrer Praxis, umgeben von Büchern"
+    }
+  },
+  "pagesLegales": [
+    { "label": "Mentions légales", "href": "/mentions-legales/" },
+    { "label": "Politique de confidentialité", "href": "/politique-de-confidentialite/" }
+  ],
+  "languesParlees": ["fr", "de"],
+  "fourchetteTarifs": "50 € - 150 €"
+}

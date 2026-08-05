@@ -1,0 +1,28 @@
+{
+  "fr": {
+    "skipLink": "Aller au contenu",
+    "menu": "Menu",
+    "langLabel": "Choix de la langue",
+    "navLabel": "Navigation principale",
+    "homeAria": "La Fabrique Relationnelle — accueil",
+    "telLabel": "Téléphone / WhatsApp",
+    "emailLabel": "E-mail",
+    "photoAVenir": "Photo à venir",
+    "footerContact": "Contact",
+    "footerCabinets": "Cabinets",
+    "footerLegal": "Pages légales"
+  },
+  "de": {
+    "skipLink": "Zum Inhalt springen",
+    "menu": "Menü",
+    "langLabel": "Sprachauswahl",
+    "navLabel": "Hauptnavigation",
+    "homeAria": "Die Fabrique Relationnelle — zum Seitenanfang",
+    "telLabel": "Telefon / WhatsApp",
+    "emailLabel": "E-Mail",
+    "photoAVenir": "Foto folgt",
+    "footerContact": "Kontakt",
+    "footerCabinets": "Praxen",
+    "footerLegal": "Rechtliches"
+  }
+}

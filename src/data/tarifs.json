@@ -1,0 +1,60 @@
+{
+  "fr": {
+    "liste": [
+      {
+        "libelle": "Accompagnement individuel",
+        "duree": "1 h",
+        "prix": "70 €",
+        "note": ""
+      },
+      {
+        "libelle": "Accompagnement de couple",
+        "duree": "1 h 30",
+        "prix": "120 €",
+        "note": ""
+      },
+      {
+        "libelle": "Accompagnement professionnel",
+        "duree": "",
+        "prix": "sur devis",
+        "note": ""
+      },
+      {
+        "libelle": "Tarif étudiant",
+        "duree": "1 h",
+        "prix": "50 €",
+        "note": ""
+      },
+      {
+        "libelle": "Tarif social",
+        "duree": "",
+        "prix": "sur demande",
+        "note": ""
+      }
+    ],
+    "mention": "Le premier échange de vingt minutes est sans frais."
+  },
+  "de": {
+    "liste": [
+      {
+        "libelle": "Einzelbegleitung",
+        "duree": "1 Std.",
+        "prix": "70 €",
+        "note": ""
+      },
+      {
+        "libelle": "Paarbegleitung",
+        "duree": "1,5 Std.",
+        "prix": "120 €",
+        "note": ""
+      },
+      {
+        "libelle": "Berufliche Begleitung, auch am Arbeitsplatz",
+        "duree": "",
+        "prix": "nach Vereinbarung",
+        "note": ""
+      }
+    ],
+    "mention": ""
+  }
+}

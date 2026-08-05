@@ -1,0 +1,19 @@
+{
+  "fr": [
+    { "label": "Accueil", "href": "/" },
+    { "label": "Mon approche", "href": "/mon-approche/" },
+    { "label": "Dans quels cas consulter", "href": "/dans-quels-cas-consulter/" },
+    { "label": "Exemples de situations", "href": "/exemples-de-situations/" },
+    { "label": "En pratique", "href": "/en-pratique/" },
+    { "label": "À propos", "href": "/a-propos/" },
+    { "label": "Tarifs et contact", "href": "/tarifs-et-contact/" }
+  ],
+  "de": [
+    { "label": "Der Ansatz", "href": "#ansatz" },
+    { "label": "Anlässe", "href": "#anlaesse" },
+    { "label": "Praktisches", "href": "#praktisches" },
+    { "label": "Honorare", "href": "#honorare" },
+    { "label": "Über mich", "href": "#ueber-mich" },
+    { "label": "Kontakt", "href": "#kontakt" }
+  ]
+}

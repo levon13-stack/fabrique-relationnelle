@@ -1,0 +1,55 @@
+---
+// Ligne ondulée signature — trait fin, à utiliser avec parcimonie.
+interface Props {
+  color?: 'coral' | 'brown' | 'yellow' | 'cream';
+  width?: number;
+  align?: 'left' | 'center';
+}
+
+const { color = 'coral', width = 132, align = 'left' } = Astro.props;
+const height = Math.round((width * 14) / 124);
+---
+
+<div class:list={['wave', `wave--${color}`, `wave--${align}`]} aria-hidden="true">
+  <svg
+    width={width}
+    height={height}
+    viewBox="0 0 124 14"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M2 7 Q 17 0 32 7 T 62 7 T 92 7 T 122 7"
+      stroke="currentColor"
+      stroke-width="2.4"
+      stroke-linecap="round"
+    ></path>
+  </svg>
+</div>
+
+<style>
+  .wave {
+    line-height: 0;
+    margin-block: 1.5rem;
+  }
+
+  .wave--coral {
+    color: var(--coral);
+  }
+
+  .wave--brown {
+    color: var(--brown);
+  }
+
+  .wave--yellow {
+    color: var(--yellow);
+  }
+
+  .wave--cream {
+    color: var(--cream);
+  }
+
+  .wave--center {
+    text-align: center;
+  }
+</style>

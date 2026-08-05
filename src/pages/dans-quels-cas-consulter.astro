@@ -1,0 +1,105 @@
+---
+import { getEntry, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import WavySeparator from '../components/WavySeparator.astro';
+
+const entry = await getEntry('pages', 'dans-quels-cas-consulter');
+if (!entry) throw new Error('Contenu introuvable : src/content/pages/dans-quels-cas-consulter.md');
+const { Content } = await render(entry);
+const { data } = entry;
+---
+
+<Layout title={data.metaTitle} description={data.metaDescription}>
+  <div class="container page-end">
+    <header class="page-head">
+      <h1>{data.title}</h1>
+      <WavySeparator color="coral" width={148} />
+      <div class="lead-block">
+        <Content />
+      </div>
+    </header>
+
+    <div class="zones">
+      {
+        data.sections.map((section) => (
+          <section class="zone" style={`--accent: var(--${section.accent ?? 'coral'});`}>
+            <h2>{section.titre}</h2>
+            <ul class="dash-list">
+              {section.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+
+    {data.noteListe && <p class="note liste-note">{data.noteListe}</p>}
+
+    {
+      data.preventif && (
+        <section class="preventif tint-panel" aria-labelledby="preventif-title">
+          <h2 id="preventif-title">{data.preventif.titre}</h2>
+          <p>{data.preventif.intro}</p>
+          <ul class="dash-list">
+            {data.preventif.items.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </div>
+</Layout>
+
+<style>
+  .page-end {
+    padding-bottom: var(--section);
+  }
+
+  /* Quatre familles en zones thématiques, chacune marquée par sa couleur */
+  .zones {
+    display: grid;
+    gap: clamp(2.75rem, 6vw, 4rem) 4.5rem;
+    margin-top: 0.5rem;
+  }
+
+  @media (min-width: 860px) {
+    .zones {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .zone {
+    border-top: 3px solid var(--accent, var(--coral));
+    padding-top: 1.4rem;
+  }
+
+  .zone h2 {
+    font-size: 1.45rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .zone :global(.dash-list li::before) {
+    color: var(--accent, var(--coral));
+  }
+
+  .liste-note {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .preventif {
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .preventif h2 {
+    margin-bottom: 1.1rem;
+  }
+
+  .preventif p,
+  .preventif ul {
+    max-width: var(--measure);
+  }
+</style>

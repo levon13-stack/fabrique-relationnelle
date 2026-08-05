@@ -1,0 +1,111 @@
+---
+// Emplacement photo : affiche l'image si le fichier référencé (frontmatter ou
+// données) existe dans public/ — elle remplace alors entièrement le réservé.
+// Sinon, un réservé discret et réduit : aplat sable, liseré, illustration en
+// filigrane très pâle (fond en pseudo-élément — jamais en flux, donc ne peut
+// pas recouvrir le texte même si le CSS scopé tarde à se charger), vague et
+// mention « Photo à venir ».
+// Déposer le fichier au bon nom + rebuild suffit à afficher la photo.
+import fs from 'node:fs';
+import WavySeparator from './WavySeparator.astro';
+import site from '../data/site.json';
+import ui from '../data/ui.json';
+
+interface Props {
+  image: { src: string; alt: string };
+  ratio?: string;
+  /** Hauteur (rem) du réservé tant qu'aucune photo n'existe — le ratio est conservé. */
+  placeholderHeight?: number;
+  /** Cadrage de la photo dans son cadre (object-position), ex. "center 30%". */
+  objectPosition?: string;
+  lang?: 'fr' | 'de';
+  class?: string;
+}
+
+const {
+  image,
+  ratio = '4 / 5',
+  placeholderHeight = 15,
+  objectPosition = 'center',
+  lang = 'fr',
+  class: className,
+} = Astro.props;
+
+const exists = fs.existsSync(new URL(`../../public${image.src}`, import.meta.url));
+
+const [ratioW, ratioH] = ratio.split('/').map((n) => parseFloat(n));
+const largeur = ((placeholderHeight * ratioW) / ratioH).toFixed(2);
+const videStyle = `aspect-ratio: ${ratio}; width: min(100%, ${largeur}rem); --filigrane: url('${site.illustration.src}');`;
+---
+
+{
+  exists ? (
+    <figure class:list={['photo-slot', className]} style={`aspect-ratio: ${ratio};`}>
+      <img src={image.src} alt={image.alt} loading="lazy" style={`object-position: ${objectPosition};`} />
+    </figure>
+  ) : (
+    <figure class:list={['photo-slot', 'photo-slot--vide', className]} style={videStyle}>
+      <div class="vide-contenu">
+        <WavySeparator color="brown" width={56} align="center" />
+        <p class="vide-note">{ui[lang].photoAVenir}</p>
+      </div>
+    </figure>
+  )
+}
+
+<style>
+  .photo-slot {
+    margin: 0;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .photo-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .photo-slot--vide {
+    position: relative;
+    background: var(--sand);
+    border: 1px solid var(--hairline);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Filigrane en fond (pseudo-élément) : hors flux, sous le contenu, ne peut
+     jamais recouvrir le texte même en cas de CSS partiellement chargé. */
+  .photo-slot--vide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--filigrane);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 62%;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .vide-contenu {
+    position: relative;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .vide-contenu :global(.wave) {
+    margin-block: 0 0.55rem;
+  }
+
+  .vide-note {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brown-soft);
+  }
+</style>

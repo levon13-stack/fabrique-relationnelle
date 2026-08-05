@@ -1,0 +1,125 @@
+---
+import { getEntry, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import WavySeparator from '../components/WavySeparator.astro';
+
+const entry = await getEntry('pages', 'exemples-de-situations');
+if (!entry) throw new Error('Contenu introuvable : src/content/pages/exemples-de-situations.md');
+const { Content } = await render(entry);
+const { data } = entry;
+---
+
+<Layout title={data.metaTitle} description={data.metaDescription}>
+  <div class="container page-end">
+    <header class="page-head">
+      <h1>{data.title}</h1>
+      <WavySeparator color="coral" width={148} />
+      <div class="lead-block">
+        <Content />
+      </div>
+    </header>
+
+    <div class="exemples">
+      {
+        data.vignettes.map((vignette, i) => (
+          <>
+            <article class="cas">
+              <span class="cas-num" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h2>{vignette.titre}</h2>
+              <p>{vignette.situation}</p>
+            </article>
+            <div class="eclairage">
+              <p>{vignette.accompagnement}</p>
+            </div>
+          </>
+        ))
+      }
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .page-end {
+    padding-bottom: var(--section);
+  }
+
+  /* Cas à gauche, éclairage à droite sur une bande jaune continue */
+  .exemples {
+    position: relative;
+    display: grid;
+  }
+
+  .cas {
+    padding-block: clamp(2rem, 4.5vw, 3rem);
+  }
+
+  .cas:not(:first-child) {
+    border-top: 1px solid var(--hairline);
+  }
+
+  .cas-num {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: var(--coral-dark);
+  }
+
+  .cas h2 {
+    font-size: clamp(1.3rem, 1.1rem + 0.9vw, 1.6rem);
+    margin-bottom: 1.1rem;
+    max-width: 24ch;
+  }
+
+  .cas p {
+    max-width: 58ch;
+  }
+
+  .eclairage {
+    color: var(--brown);
+    background: var(--yellow);
+    border-radius: 12px;
+    padding: 1.6rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .eclairage p {
+    margin: 0;
+  }
+
+  @media (min-width: 900px) {
+    .exemples {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      column-gap: 3.5rem;
+    }
+
+    /* La bande jaune : un seul aplat vertical ininterrompu, colonne droite */
+    .exemples::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: calc((100% - 3.5rem) * 5 / 12);
+      background: var(--yellow);
+      border-radius: 14px;
+    }
+
+    .cas {
+      grid-column: 1;
+    }
+
+    .eclairage {
+      grid-column: 2;
+      position: relative;
+      background: none;
+      border-radius: 0;
+      margin-bottom: 0;
+      padding: clamp(2rem, 4.5vw, 3rem) clamp(1.4rem, 2.5vw, 2.25rem);
+      align-self: start;
+    }
+  }
+</style>

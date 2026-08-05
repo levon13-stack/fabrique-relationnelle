@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# [DOMAINE À CONFIRMER] — mettre à jour si le domaine définitif change (voir A-COMPLETER.md)
+Sitemap: https://lafabriquerelationnelle.fr/sitemap-index.xml

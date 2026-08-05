@@ -1,0 +1,197 @@
+---
+import { getEntry, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import WavySeparator from '../components/WavySeparator.astro';
+import PhotoSlot from '../components/PhotoSlot.astro';
+import site from '../data/site.json';
+
+const entry = await getEntry('pages', 'accueil');
+if (!entry) throw new Error('Contenu introuvable : src/content/pages/accueil.md');
+const { Content } = await render(entry);
+const { data } = entry;
+
+// Espaces insécables à l'intérieur des guillemets français.
+const citation = data.citation?.replace('« ', '« ').replace(' »', ' »');
+---
+
+<Layout title={data.metaTitle} description={data.metaDescription} withJsonLd>
+  <section class="hero container">
+    <div class="hero-text">
+      <p class="kicker">{site.sousTitre.fr}</p>
+      <h1>{data.title}</h1>
+      <p class="sous-titre">{citation}</p>
+      <WavySeparator color="coral" width={148} />
+      <div class="lead-block">
+        <Content />
+      </div>
+    </div>
+    <div class="hero-art">
+      <img
+        src={site.illustration.src}
+        alt={site.illustration.alt.fr}
+        width={site.illustration.largeur}
+        height={site.illustration.hauteur}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+  </section>
+
+  {
+    data.photo && (
+      <section class="ambiance container">
+        <figure class="ambiance-figure">
+          <PhotoSlot image={data.photo} ratio="19 / 10" objectPosition="center 38%" />
+        </figure>
+      </section>
+    )
+  }
+
+  <section class="toc-section container" aria-labelledby="toc-title">
+    <p class="kicker" id="toc-title">{data.rubriques.sommaire}</p>
+    <ol class="toc">
+      {
+        data.sommaire.map((item, i) => (
+          <li>
+            <a href={item.href}>
+              <span class="toc-num" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span class="toc-body">
+                <span class="toc-title">{item.titre}</span>
+                <span class="toc-teaser">{item.teaser}</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    display: grid;
+    gap: 3rem 4.5rem;
+    padding-block: clamp(3rem, 7vw, 5.5rem) clamp(2.5rem, 6vw, 4.5rem);
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+  }
+
+  .hero h1 {
+    max-width: 21ch;
+  }
+
+  /* Sous-titre : plus petit que le H1, plus grand que le corps de texte */
+  .sous-titre {
+    margin: 1rem 0 0;
+    font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.4rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--brown-soft);
+    max-width: 34ch;
+  }
+
+  /* Arche sable : grande forme plate, clin d'œil à la carte de visite */
+  .hero-art {
+    position: relative;
+    padding: 3rem 1.75rem 0;
+  }
+
+  .hero-art::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--sand);
+    border-radius: 999px 999px 16px 16px;
+  }
+
+  .hero-art img {
+    position: relative;
+    width: 100%;
+  }
+
+  /* Grande bande photo, pleine largeur du conteneur */
+  .ambiance {
+    margin-block: clamp(1rem, 3vw, 2.5rem) 0;
+  }
+
+  .ambiance-figure {
+    margin: 0;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .toc-section {
+    padding-block: clamp(3rem, 7vw, 4.5rem) var(--section);
+  }
+
+  .toc {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+  }
+
+  .toc a {
+    display: flex;
+    gap: 1.5rem 2.5rem;
+    align-items: baseline;
+    padding-block: 1.35rem;
+    border-top: 1px solid var(--hairline);
+    text-decoration: none;
+  }
+
+  .toc li:last-child a {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .toc-num {
+    font-size: 1.35rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--brown-soft);
+    min-width: 2.6rem;
+  }
+
+  .toc-body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1.75rem;
+  }
+
+  .toc-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--brown);
+  }
+
+  .toc-teaser {
+    font-weight: 300;
+    color: var(--brown-soft);
+    max-width: 44ch;
+  }
+
+  .toc a:hover .toc-title,
+  .toc a:hover .toc-num {
+    color: var(--coral-dark);
+  }
+
+  @media (max-width: 640px) {
+    .toc a {
+      gap: 1rem;
+    }
+
+    .toc-num {
+      min-width: 2.1rem;
+      font-size: 1.1rem;
+    }
+  }
+</style>

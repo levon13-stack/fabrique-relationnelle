@@ -1,0 +1,90 @@
+---
+import { getEntry, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import WavySeparator from '../components/WavySeparator.astro';
+import PhotoSlot from '../components/PhotoSlot.astro';
+
+const entry = await getEntry('pages', 'a-propos');
+if (!entry) throw new Error('Contenu introuvable : src/content/pages/a-propos.md');
+const { Content } = await render(entry);
+const { data } = entry;
+
+// Espaces insécables à l'intérieur des guillemets français.
+const citation = data.citation?.replace('« ', '« ').replace(' »', ' »');
+---
+
+<Layout title={data.metaTitle} description={data.metaDescription}>
+  <div class="container page-end">
+    <header class="page-head">
+      {data.kicker && <p class="kicker">{data.kicker}</p>}
+      <h1>{data.title}</h1>
+      <WavySeparator color="coral" width={148} />
+    </header>
+
+    <!-- Portrait de Sabine : public/images/portrait-sabine.jpg -->
+    <div class="apropos-hero">
+      {
+        data.portrait && (
+          <PhotoSlot
+            image={data.portrait}
+            ratio="3 / 2"
+            objectPosition="center 30%"
+            class="portrait"
+          />
+        )
+      }
+      {
+        citation && (
+          <blockquote class="exergue">
+            <WavySeparator color="coral" width={84} />
+            <p>{citation}</p>
+          </blockquote>
+        )
+      }
+    </div>
+
+    <div class="apropos-texte lead-block">
+      <Content />
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .page-end {
+    padding-bottom: var(--section);
+  }
+
+  /* Portrait + parole de Sabine côte à côte : la page la plus personnelle */
+  .apropos-hero {
+    display: grid;
+    gap: 2.5rem 4rem;
+    align-items: center;
+  }
+
+  @media (min-width: 820px) {
+    .apropos-hero {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+  }
+
+  .apropos-hero :global(.portrait) {
+    border-radius: 14px;
+  }
+
+  .exergue {
+    margin: 0;
+  }
+
+  .exergue p {
+    margin: 0.9rem 0 0;
+    font-size: clamp(1.35rem, 1.15rem + 0.9vw, 1.75rem);
+    font-weight: 300;
+    line-height: 1.42;
+    text-wrap: balance;
+  }
+
+  .apropos-texte {
+    max-width: var(--measure);
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+  }
+</style>
