@@ -18,6 +18,12 @@
   },
   "email": "fabrique.relationnelle@gmail.com",
   "emailPlaceholder": "[EMAIL À FOURNIR]",
+  "adresseAix": {
+    "rue": "37 traverse de la Magotte",
+    "codePostal": "13090",
+    "ville": "Aix-en-Provence",
+    "pays": "FR"
+  },
   "adresseMarseille": {
     "rue": "44 rue Sainte",
     "codePostal": "13001",
@@ -25,12 +31,24 @@
     "pays": "FR"
   },
   "cabinets": [
-    { "nom": "Aix-en-Provence", "adresse": "" },
-    { "nom": "Marseille", "adresse": "44 rue Sainte, 13001" }
+    {
+      "nom": "Aix-en-Provence",
+      "adresse": "37 traverse de la Magotte, 13090"
+    },
+    {
+      "nom": "Marseille",
+      "adresse": "44 rue Sainte, 13001"
+    }
   ],
   "visio": {
-    "fr": { "nom": "Visioconférence", "detail": "pour tous les accompagnements" },
-    "de": { "nom": "Videokonferenz", "detail": "für alle Begleitungen" }
+    "fr": {
+      "nom": "Visioconférence",
+      "detail": "pour tous les accompagnements"
+    },
+    "de": {
+      "nom": "Videokonferenz",
+      "detail": "für alle Begleitungen"
+    }
   },
   "illustration": {
     "src": "/images/illustration.png",
@@ -49,9 +67,18 @@
     }
   },
   "pagesLegales": [
-    { "label": "Mentions légales", "href": "/mentions-legales/" },
-    { "label": "Politique de confidentialité", "href": "/politique-de-confidentialite/" }
+    {
+      "label": "Mentions légales",
+      "href": "/mentions-legales/"
+    },
+    {
+      "label": "Politique de confidentialité",
+      "href": "/politique-de-confidentialite/"
+    }
   ],
-  "languesParlees": ["fr", "de"],
+  "languesParlees": [
+    "fr",
+    "de"
+  ],
   "fourchetteTarifs": "50 € - 150 €"
 }
