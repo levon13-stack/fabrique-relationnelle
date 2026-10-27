@@ -2,11 +2,10 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// [DOMAINE À CONFIRMER] : lafabriquerelationnelle.fr est le nom de domaine
-// envisagé. À remplacer par le domaine définitif avant la mise en ligne
-// (voir A-COMPLETER.md). Sert au sitemap, aux balises canonical et hreflang.
+// Domaine définitif : www.fabrique-relationnelle.com (la version sans www doit rediriger en 301)
+// Sert au sitemap, aux balises canonical, og:url et hreflang.
 export default defineConfig({
-  site: 'https://lafabriquerelationnelle.fr',
+  site: 'https://www.fabrique-relationnelle.com',
   output: 'static',
   integrations: [sitemap()],
 });
