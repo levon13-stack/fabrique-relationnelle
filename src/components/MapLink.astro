@@ -1,0 +1,32 @@
+---
+// Lien discret vers la fiche Google Maps d'un cabinet (nouvel onglet,
+// signalé aux lecteurs d'écran). Libellés : src/data/ui.json.
+import ui from '../data/ui.json';
+
+interface Props {
+  href: string;
+  lang?: 'fr' | 'de';
+}
+
+const { href, lang = 'fr' } = Astro.props;
+const t = ui[lang];
+---
+
+<a class="map-link" href={href} target="_blank" rel="noopener">
+  {t.voirSurGoogleMaps}<span aria-hidden="true">&nbsp;↗</span><span class="visually-hidden"
+    >{` ${t.nouvelOnglet}`}</span
+  >
+</a>
+
+<style>
+  .map-link {
+    display: inline-block;
+    margin-top: 0.25rem;
+    font-size: 0.88rem;
+    color: var(--brown-soft);
+  }
+
+  .map-link:hover {
+    color: var(--coral-dark);
+  }
+</style>

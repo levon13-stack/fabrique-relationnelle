@@ -1,9 +1,9 @@
 ---
-metaTitle: Dans quels cas consulter — Accompagnement à Aix & Marseille
+metaTitle: "Dans quels cas consulter ? Coaching à Aix-en-Provence"
 metaDescription: >-
-  Anxiété, burnout, manque de confiance en soi, hypersensibilité, gestion des
-  émotions, conflits de couple ou tensions familiales : dans quels cas un
-  accompagnement peut aider.
+  Anxiété, burnout, confiance en soi, hypersensibilité, émotions, conflits de
+  couple ou tensions familiales : quand consulter en coaching à Aix-en-
+  Provence.
 title: Dans quels cas consulter
 sections:
   - titre: Dans votre vie personnelle

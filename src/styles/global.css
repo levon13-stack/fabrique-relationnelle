@@ -5,10 +5,36 @@
    sur les états de survol.
    ========================================================================== */
 
+/* Mulish auto-hébergée (police variable, OFL — voir public/fonts/OFL.txt) :
+   aucune requête vers Google, pas de CSS bloquant le rendu. */
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 1000;
+  src: url('/fonts/mulish-latin-wght-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 1000;
+  src: url('/fonts/mulish-latin-ext-wght-normal.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 :root {
   --cream:  #FAF3EA; /* fond principal, crème / beige rosé */
-  --coral:  #E8663C; /* accent, boutons */
-  --coral-dark: #D4552C; /* hover boutons */
+  --coral:  #E8663C; /* accent : filets, vagues, soulignements, grands chiffres */
+  /* Corail assombri pour le TEXTE (survol, petits numéros) : 5:1 sur crème,
+     4,6:1 sur sable — l'ancien #D4552C n'atteignait que 3,7:1 (WCAG AA). */
+  --coral-dark: #B5441F;
   --yellow: #F4B62C; /* accent secondaire */
   --brown:  #3E2A20; /* texte principal, brun foncé */
   --brown-soft: #6B5648; /* texte secondaire */
@@ -52,14 +78,25 @@ img {
   display: block;
 }
 
+/* <picture> (AVIF / WebP) ne doit pas changer la mise en page de l'image */
+picture {
+  display: contents;
+}
+
+main:focus {
+  outline: none;
+}
+
 ::selection {
   background: var(--yellow);
   color: var(--brown);
 }
 
+/* Focus clavier bien visible (contour ≥ 3:1 exigé par WCAG 2.1) */
 :focus-visible {
-  outline: 2px solid var(--coral);
+  outline: 3px solid var(--coral-dark);
   outline-offset: 3px;
+  border-radius: 2px;
 }
 
 /* --- Typographie ----------------------------------------------------------- */
@@ -130,6 +167,11 @@ a {
 
 a:hover {
   color: var(--coral-dark);
+}
+
+/* Adresses e-mail : peuvent passer à la ligne (texte agrandi, petits écrans) */
+a[href^='mailto:'] {
+  overflow-wrap: anywhere;
 }
 
 /* --- Structure -------------------------------------------------------------- */
@@ -321,9 +363,10 @@ main {
   gap: 1.5rem 2rem;
 }
 
+/* Colonnes en rem : se réorganisent d'elles-mêmes quand le texte est agrandi */
 @media (min-width: 640px) {
   .places {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
   }
 }
 

@@ -22,9 +22,7 @@ const { data } = entry;
     {
       data.sections.map((section, i) => (
         <section class="bloc">
-          <span class="bloc-num" aria-hidden="true">
-            {String(i + 1).padStart(2, '0')}
-          </span>
+          <span class="bloc-num" aria-hidden="true" data-num={String(i + 1).padStart(2, '0')} />
           <h2>{section.titre}</h2>
           <div class="bloc-body">
             {section.paragraphes.map((paragraphe) => (
@@ -50,6 +48,11 @@ const { data } = entry;
     column-gap: clamp(1.25rem, 3vw, 2rem);
     border-top: 1px solid var(--hairline);
     padding-block: clamp(2.75rem, 6vw, 4.25rem);
+  }
+
+  /* Chiffre décoratif rendu en CSS : en contour, il n'est pas du texte à lire */
+  .bloc-num::before {
+    content: attr(data-num);
   }
 
   .bloc-num {

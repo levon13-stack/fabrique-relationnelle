@@ -1,5 +1,5 @@
 ---
-metaTitle: Exemples de situations — Coaching systémique | La Fabrique Relationnelle
+metaTitle: "Exemples de situations en coaching à Aix-en-Provence"
 metaDescription: >-
   Couple, adolescent, burnout, confiance en soi, émotions, management : des
   exemples concrets de situations d’accompagnement à Aix-en-Provence et

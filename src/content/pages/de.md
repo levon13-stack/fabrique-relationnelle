@@ -1,5 +1,5 @@
 ---
-metaTitle: Deutschsprachiges Coaching in Aix-en-Provence & Marseille
+metaTitle: "Coaching auf Deutsch in Aix-en-Provence und Marseille"
 metaDescription: >-
   Systemische Begleitung und Kurzzeit-Coaching auf Deutsch in Aix-en-Provence,
   Marseille und per Video. Bei Burnout, Stress, Beziehungs- und Paarproblemen.

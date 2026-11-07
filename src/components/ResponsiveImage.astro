@@ -1,0 +1,50 @@
+---
+// Image d'un fichier de public/images/ servie en AVIF / WebP aux bonnes
+// dimensions (variantes générées par scripts/optimize-images.mjs), avec
+// width/height pour éviter les décalages de mise en page.
+// `priority` : image principale visible au chargement (chargée en premier).
+// `eager` : visible au chargement mais secondaire (ex. logo de l'en-tête).
+import fs from 'node:fs';
+import path from 'node:path';
+import sharp from 'sharp';
+import { FORMATS, largeursPour, nomVariante } from '../lib/images.mjs';
+
+interface Props {
+  src: string;
+  alt: string;
+  sizes: string;
+  priority?: boolean;
+  eager?: boolean;
+  class?: string;
+  style?: string;
+}
+
+const { src, alt, sizes, priority = false, eager = false, class: className, style } = Astro.props;
+const lazy = !priority && !eager;
+
+// Résolu depuis la racine du projet (voir la note dans PhotoSlot.astro).
+const publicDir = path.join(process.cwd(), 'public');
+const { width = 0, height = 0 } = await sharp(path.join(publicDir, src)).metadata();
+
+const sources = FORMATS.map((format) => {
+  const variantes = largeursPour(width)
+    .map((l) => ({ l, url: nomVariante(src, l, format) }))
+    .filter(({ url }) => fs.existsSync(path.join(publicDir, url)));
+  return { format, srcset: variantes.map(({ l, url }) => `${url} ${l}w`).join(', ') };
+}).filter((s) => s.srcset);
+---
+
+<picture>
+  {sources.map((s) => <source type={`image/${s.format}`} srcset={s.srcset} sizes={sizes} />)}
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    class={className}
+    style={style}
+    loading={lazy ? 'lazy' : 'eager'}
+    decoding={lazy ? 'async' : undefined}
+    fetchpriority={priority ? 'high' : undefined}
+  />
+</picture>

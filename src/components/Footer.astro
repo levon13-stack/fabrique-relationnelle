@@ -4,6 +4,8 @@
 import WavySeparator from './WavySeparator.astro';
 import site from '../data/site.json';
 import ui from '../data/ui.json';
+import ResponsiveImage from './ResponsiveImage.astro';
+import MapLink from './MapLink.astro';
 
 interface Props {
   lang?: 'fr' | 'de';
@@ -13,6 +15,9 @@ const { lang = 'fr' } = Astro.props;
 const t = ui[lang];
 const homeHref = lang === 'de' ? '/de/' : '/';
 const visio = site.visio[lang];
+// Même source et même écriture que la page contact et les données
+// structurées (cohérence NAP pour le référencement local).
+const adresses = [site.adresseAix, site.adresseMarseille];
 ---
 
 <footer class="site-footer">
@@ -21,14 +26,8 @@ const visio = site.visio[lang];
 
     <div class="cols">
       <div class="brand">
-        <a class="lockup" href={homeHref} aria-label={t.homeAria}>
-          <img
-            src={site.illustration.src}
-            alt=""
-            width={site.illustration.largeur}
-            height={site.illustration.hauteur}
-            loading="lazy"
-          />
+        <a class="lockup" href={homeHref}>
+          <ResponsiveImage src={site.logo.src} alt="" sizes="80px" />
           <span class="lockup-name">{site.nom}</span>
         </a>
         <p class="tagline">{site.sousTitre[lang]}</p>
@@ -60,12 +59,20 @@ const visio = site.visio[lang];
         <p class="col-title">{t.footerCabinets}</p>
         <ul>
           {
-            site.cabinets.map((cabinet) => (
-              <li>
-                {cabinet.nom}
-                {cabinet.adresse && ` — ${cabinet.adresse}`}
-              </li>
-            ))
+            site.cabinets.map((cabinet) => {
+              const adresse = adresses.find((a) => a.ville === cabinet.nom);
+              return (
+                <li>
+                  <span class="cabinet-nom">{cabinet.nom}</span>
+                  {adresse && (
+                    <span class="cabinet-adresse">
+                      {adresse.rue}, {adresse.codePostal} {adresse.ville}
+                    </span>
+                  )}
+                  {adresse?.ficheGoogle && <MapLink href={adresse.ficheGoogle} lang={lang} />}
+                </li>
+              );
+            })
           }
           <li>{visio.nom}</li>
         </ul>
@@ -94,9 +101,10 @@ const visio = site.visio[lang];
     margin-top: 1.75rem;
   }
 
+  /* Colonnes en rem : passent à la ligne d'elles-mêmes si le texte est agrandi */
   @media (min-width: 760px) {
     .cols {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 3.5fr) minmax(0, 3.5fr);
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
     }
   }
 
@@ -108,13 +116,14 @@ const visio = site.visio[lang];
     text-decoration: none;
   }
 
-  .lockup img {
-    height: 52px;
+  /* Version petite et discrète du logo (le grand est dans l'en-tête) */
+  .lockup :global(img) {
+    height: 28px;
     width: auto;
   }
 
   .lockup-name {
-    font-size: 0.67rem;
+    font-size: 0.62rem;
     font-weight: 700;
     letter-spacing: 0.17em;
     text-transform: uppercase;
@@ -145,6 +154,16 @@ const visio = site.visio[lang];
 
   .col li {
     margin-bottom: 0.55em;
+  }
+
+  .cabinet-nom {
+    display: block;
+    font-weight: 600;
+  }
+
+  .cabinet-adresse {
+    display: block;
+    color: var(--brown-soft);
   }
 
   .placeholder {

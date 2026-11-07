@@ -9,6 +9,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import WavySeparator from './WavySeparator.astro';
+import ResponsiveImage from './ResponsiveImage.astro';
 import site from '../data/site.json';
 import ui from '../data/ui.json';
 
@@ -21,6 +22,10 @@ interface Props {
   objectPosition?: string;
   lang?: 'fr' | 'de';
   class?: string;
+  /** Photo visible dès l'arrivée sur la page : chargée en priorité, sans lazy-loading. */
+  priority?: boolean;
+  /** Largeur d'affichage, pour choisir la bonne variante (attribut sizes). */
+  sizes?: string;
 }
 
 const {
@@ -30,6 +35,8 @@ const {
   objectPosition = 'center',
   lang = 'fr',
   class: className,
+  priority = false,
+  sizes = '(min-width: 1080px) 1000px, 100vw',
 } = Astro.props;
 
 // Résolu depuis process.cwd() (racine du projet), pas depuis import.meta.url :
@@ -45,7 +52,13 @@ const videStyle = `aspect-ratio: ${ratio}; width: min(100%, ${largeur}rem); --fi
 {
   exists ? (
     <figure class:list={['photo-slot', className]} style={`aspect-ratio: ${ratio};`}>
-      <img src={image.src} alt={image.alt} loading="lazy" style={`object-position: ${objectPosition};`} />
+      <ResponsiveImage
+        src={image.src}
+        alt={image.alt}
+        sizes={sizes}
+        priority={priority}
+        style={`object-position: ${objectPosition};`}
+      />
     </figure>
   ) : (
     <figure class:list={['photo-slot', 'photo-slot--vide', className]} style={videStyle}>
@@ -65,7 +78,7 @@ const videStyle = `aspect-ratio: ${ratio}; width: min(100%, ${largeur}rem); --fi
     overflow: hidden;
   }
 
-  .photo-slot img {
+  .photo-slot :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;

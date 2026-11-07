@@ -4,25 +4,27 @@
     "menu": "Menu",
     "langLabel": "Choix de la langue",
     "navLabel": "Navigation principale",
-    "homeAria": "La Fabrique Relationnelle — accueil",
     "telLabel": "Téléphone / WhatsApp",
     "emailLabel": "E-mail",
     "photoAVenir": "Photo à venir",
     "footerContact": "Contact",
     "footerCabinets": "Cabinets",
-    "footerLegal": "Pages légales"
+    "footerLegal": "Pages légales",
+    "voirSurGoogleMaps": "Voir le cabinet sur Google Maps",
+    "nouvelOnglet": "(s’ouvre dans un nouvel onglet)"
   },
   "de": {
     "skipLink": "Zum Inhalt springen",
     "menu": "Menü",
     "langLabel": "Sprachauswahl",
     "navLabel": "Hauptnavigation",
-    "homeAria": "Die Fabrique Relationnelle — zum Seitenanfang",
     "telLabel": "Telefon / WhatsApp",
     "emailLabel": "E-Mail",
     "photoAVenir": "Foto folgt",
     "footerContact": "Kontakt",
     "footerCabinets": "Praxen",
-    "footerLegal": "Rechtliches"
+    "footerLegal": "Rechtliches",
+    "voirSurGoogleMaps": "Die Praxis auf Google Maps ansehen",
+    "nouvelOnglet": "(öffnet in einem neuen Tab)"
   }
 }

@@ -1,12 +1,13 @@
 ---
-metaTitle: Tarifs et contact — Prendre rendez-vous | La Fabrique Relationnelle
+metaTitle: "Tarifs et contact : coaching systémique à Aix-en-Provence"
 metaDescription: >-
-  Prenez contact pour un premier échange gratuit de 20 min en visio. Par
-  e-mail, téléphone ou WhatsApp. Cabinets à Aix-en-Provence et Marseille.
+  Tarifs et prise de contact : premier échange gratuit de 20 min en visio, par
+  e-mail, téléphone ou WhatsApp. Cabinets de coaching à Aix-en-Provence et
+  Marseille.
 title: Tarifs et contact
 photo:
   src: /images/contact-ambiance.jpg
-  alt: Photo du cabinet
+  alt: Sabine en visioconférence devant son ordinateur, dans son cabinet
 rubriques:
   tarifs: Tarifs
   contact: Contact

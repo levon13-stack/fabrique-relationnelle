@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import WavySeparator from '../components/WavySeparator.astro';
 import PhotoSlot from '../components/PhotoSlot.astro';
 import ContactCTA from '../components/ContactCTA.astro';
+import MapLink from '../components/MapLink.astro';
 import site from '../data/site.json';
 import tarifs from '../data/tarifs.json';
 
@@ -49,6 +50,7 @@ const prixAffiche = (tarif: { prix: string; duree: string }) =>
               ratio="3 / 2"
               objectPosition="30% center"
               class="contact-photo"
+              sizes="(min-width: 1080px) 455px, (min-width: 860px) 45vw, 100vw"
             />
           )
         }
@@ -71,11 +73,14 @@ const prixAffiche = (tarif: { prix: string; duree: string }) =>
                 {[site.adresseAix, site.adresseMarseille]
                   .filter((a) => a.ville === cabinet.nom)
                   .map((a) => (
-                    <span class="place-detail">
-                      {a.rue}
-                      <br />
-                      {a.codePostal} {a.ville}
-                    </span>
+                    <>
+                      <span class="place-detail">
+                        {a.rue}
+                        <br />
+                        {a.codePostal} {a.ville}
+                      </span>
+                      {a.ficheGoogle && <MapLink href={a.ficheGoogle} />}
+                    </>
                   ))}
               </li>
             ))

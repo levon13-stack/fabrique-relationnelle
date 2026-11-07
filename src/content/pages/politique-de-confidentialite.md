@@ -1,8 +1,9 @@
 ---
-metaTitle: Politique de confidentialité — La Fabrique Relationnelle
+metaTitle: "Confidentialité · cabinet de coaching à Aix-en-Provence"
 metaDescription: >-
-  Politique de confidentialité du site de La Fabrique Relationnelle :
-  traitement des données, droits RGPD, hébergement et cookies.
+  Politique de confidentialité de La Fabrique Relationnelle, coaching à Aix-
+  en-Provence et Marseille : données traitées, droits RGPD, hébergement et
+  cookies.
 title: Politique de confidentialité
 ---
 
