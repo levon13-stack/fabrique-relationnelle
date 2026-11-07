@@ -9,7 +9,9 @@
     "photoAVenir": "Photo à venir",
     "footerContact": "Contact",
     "footerCabinets": "Cabinets",
-    "footerLegal": "Pages légales"
+    "footerLegal": "Pages légales",
+    "voirSurGoogleMaps": "Voir le cabinet sur Google Maps",
+    "nouvelOnglet": "(s’ouvre dans un nouvel onglet)"
   },
   "de": {
     "skipLink": "Zum Inhalt springen",
@@ -21,6 +23,8 @@
     "photoAVenir": "Foto folgt",
     "footerContact": "Kontakt",
     "footerCabinets": "Praxen",
-    "footerLegal": "Rechtliches"
+    "footerLegal": "Rechtliches",
+    "voirSurGoogleMaps": "Die Praxis auf Google Maps ansehen",
+    "nouvelOnglet": "(öffnet in einem neuen Tab)"
   }
 }

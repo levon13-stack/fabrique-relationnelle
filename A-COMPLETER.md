@@ -1,79 +1,53 @@
-# À compléter avant la mise en ligne
+# À compléter
 
-Liste de tous les placeholders du site et de leur emplacement exact.
+## Reste à faire
 
-## 1. E-mail — FOURNI ✅ (23 juillet 2026)
+### 1. Horaires précis
 
-`fabrique.relationnelle@gmail.com` est renseigné dans `src/data/site.json`
-(source unique) et remplace désormais le placeholder partout : footer,
-encart « Premier échange », page Tarifs et contact, section Kontakt
-allemande, Mentions légales et Politique de confidentialité.
+Le site indique seulement « du lundi au samedi ». Renseigner les horaires dans
+**`src/data/site.json`** → `horaires` (alimente les données structurées de
+l'accueil, `openingHoursSpecification`). Une entrée par plage :
 
-## 2. `[DATE DE MISE EN LIGNE]` — politique de confidentialité
+```json
+{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday"], "opens": "09:00", "closes": "19:00" }
+```
+
+Utiliser les mêmes horaires que sur la fiche Google Business Profile.
+
+### 2. `[DATE DE MISE EN LIGNE]` — politique de confidentialité
 
 - **`src/content/pages/politique-de-confidentialite.md`** → ligne
   « Dernière mise à jour : … » en tête du texte.
 
-## 3. `[Coordonnées du médiateur à compléter le cas échéant.]`
+### 3. `[Coordonnées du médiateur à compléter le cas échéant.]` — mentions légales
+
+Ce texte entre crochets est encore affiché sur la page.
 
 - **`src/content/pages/mentions-legales.md`** → section « Médiation de la
   consommation ». Renseigner le médiateur de la consommation choisi (nom,
   adresse, site) ou retirer la phrase entre crochets si non applicable.
 
-## 4. Photos — FOURNIES ✅ (23 juillet 2026)
+## Déjà fait ✅
 
-Les trois photos de Sabine sont intégrées et optimisées pour le web
-(redimensionnées + compressées depuis les originaux 8049 px / 20 Mo) :
-
-| Fichier dans `public/images/` | Page(s) | Rôle |
-| --- | --- | --- |
-| `accueil-ambiance.jpg` | Accueil + page allemande | grande bande photo sous le hero |
-| `portrait-sabine.jpg` | À propos | portrait en tête, face à la citation |
-| `contact-ambiance.jpg` | Tarifs et contact | photo « à l'écoute » près des coordonnées |
-
-Pour remplacer une photo plus tard : déposer un fichier du même nom dans
-`public/images/` (idéalement large ~1600–2400 px, JPEG optimisé) et rebuilder.
-Le cadrage à l'intérieur du cadre se règle via `objectPosition` dans la page
-concernée (ex. `objectPosition="center 30%"`).
-
-## 5. Nom de domaine définitif — FIXÉ ✅
-
-Le domaine `www.fabrique-relationnelle.com` est la base des URLs canoniques,
-du sitemap et des balises hreflang ; la version sans www redirige en 301
-(`vercel.json`). S'il change :
-
-- **`astro.config.mjs`** → champ `site`.
-- **`public/robots.txt`** → ligne `Sitemap:`.
-- **`vercel.json`** → redirection sans www → www.
-
-## 6. Image de partage social (og-image)
-
-`public/images/og-image.png` (1200 × 630) est générée sur charte
-(illustration + nom + sous-titre) par `npm run generate:og`
-(`scripts/generate-og.mjs`, qui produit aussi `public/apple-touch-icon.png`).
-À relancer si le nom, le sous-titre ou l'illustration changent — ou remplacer
-le fichier par une version avec photo une fois les photos disponibles.
-
-## 7. À valider — deux balises meta ajustées
-
-Le document de contenu prévoyait un formulaire de contact et les tarifs sur
-la page « En pratique » ; le site n'a pas de formulaire et les tarifs sont
-sur « Tarifs et contact ». Deux meta ont donc été ajustées en conséquence,
-à valider :
-
-- `src/content/pages/en-pratique.md` → titre « En pratique — Déroulement des
-  séances… » (au lieu de « Séances et tarifs ») et description sans la
-  mention des tarifs.
-- `src/content/pages/tarifs-et-contact.md` → description « Par e-mail,
-  téléphone ou WhatsApp » (le mot « formulaire » a été retiré, ici et dans
-  le texte de la page ainsi que dans la section Kontakt allemande).
-
-## 8. Référencement local — deux informations manquantes (TODO)
-
-Dans **`src/data/site.json`** (alimente les données structurées de l'accueil) :
-
-- **`ficheGoogle`** → coller le lien public de la fiche Google Business
-  Profile (ex. `https://maps.app.goo.gl/…`). Il sera ajouté en `sameAs`.
-- **`horaires`** → horaires d'ouverture. Le site indique seulement « du lundi
-  au samedi » ; format attendu, une entrée par plage :
-  `{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday"], "opens": "09:00", "closes": "19:00" }`.
+- **E-mail** : `fabrique.relationnelle@gmail.com`, source unique
+  `src/data/site.json`.
+- **Photos** : `accueil-ambiance.jpg` (accueil + page allemande),
+  `portrait-sabine.jpg` (À propos), `contact-ambiance.jpg` (Tarifs et
+  contact). Pour en remplacer une : déposer un fichier du même nom dans
+  `public/images/` puis rebuilder ; les versions AVIF/WebP sont régénérées
+  automatiquement. Cadrage via `objectPosition` dans la page concernée.
+- **Domaine** : `www.fabrique-relationnelle.com` (canonical, sitemap,
+  hreflang) ; la version sans www redirige en 301. S'il change :
+  `astro.config.mjs` (`site`), `public/robots.txt` (`Sitemap:`),
+  `vercel.json` (redirection).
+- **Fiche Google Business Profile** :
+  `https://www.google.com/maps?cid=17635505642573603909`. Elle est renseignée
+  dans `src/data/site.json` → `adresseAix.ficheGoogle`, utilisée dans les
+  données structurées (`sameAs`, `hasMap`) et pour le lien « Voir le cabinet
+  sur Google Maps » (pied de page, page Tarifs et contact).
+- **Image de partage et icônes** : `npm run generate:og` régénère
+  `og-image.png`, `apple-touch-icon.png`, `favicon.ico` et les icônes 192/512.
+  À relancer si le nom, le sous-titre ou l'illustration changent.
+- **Titles et meta descriptions** : réécrits dans la PR #1 (uniques, centrés
+  sur Aix-en-Provence), sans mention de formulaire. Le site n'a pas de
+  formulaire de contact, et les tarifs sont sur « Tarifs et contact ».

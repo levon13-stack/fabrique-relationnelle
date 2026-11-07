@@ -26,8 +26,7 @@ const ogImageAlt = `${site.nom} — ${site.sousTitre[lang]}`;
 
 // Données structurées ProfessionalService (accueil + page DE), alimentées
 // par src/data/site.json. Adresse principale : cabinet d'Aix-en-Provence.
-// TODO : renseigner dans site.json « ficheGoogle » (lien de la fiche Google
-// Business Profile → sameAs) et « horaires » (→ openingHoursSpecification).
+// TODO : renseigner dans site.json « horaires » (→ openingHoursSpecification).
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
@@ -51,7 +50,8 @@ const jsonLd = {
     ...site.cabinets.map((cabinet) => ({ '@type': 'City', name: cabinet.nom })),
     { '@type': 'AdministrativeArea', name: site.region },
   ],
-  sameAs: site.ficheGoogle ? [site.ficheGoogle] : undefined,
+  hasMap: site.adresseAix.ficheGoogle || undefined,
+  sameAs: site.adresseAix.ficheGoogle ? [site.adresseAix.ficheGoogle] : undefined,
   openingHoursSpecification: site.horaires.length ? site.horaires : undefined,
   knowsLanguage: site.languesParlees,
   priceRange: site.fourchetteTarifs,

@@ -5,6 +5,7 @@ import WavySeparator from './WavySeparator.astro';
 import site from '../data/site.json';
 import ui from '../data/ui.json';
 import ResponsiveImage from './ResponsiveImage.astro';
+import MapLink from './MapLink.astro';
 
 interface Props {
   lang?: 'fr' | 'de';
@@ -68,6 +69,7 @@ const adresses = [site.adresseAix, site.adresseMarseille];
                       {adresse.rue}, {adresse.codePostal} {adresse.ville}
                     </span>
                   )}
+                  {adresse?.ficheGoogle && <MapLink href={adresse.ficheGoogle} lang={lang} />}
                 </li>
               );
             })

@@ -22,16 +22,17 @@
     "rue": "37 traverse de la Magotte",
     "codePostal": "13090",
     "ville": "Aix-en-Provence",
-    "pays": "FR"
+    "pays": "FR",
+    "ficheGoogle": "https://www.google.com/maps?cid=17635505642573603909"
   },
   "adresseMarseille": {
     "rue": "44 rue Sainte",
     "codePostal": "13001",
     "ville": "Marseille",
-    "pays": "FR"
+    "pays": "FR",
+    "ficheGoogle": ""
   },
   "region": "Bouches-du-Rhône",
-  "ficheGoogle": "",
   "horaires": [],
   "cabinets": [
     {
