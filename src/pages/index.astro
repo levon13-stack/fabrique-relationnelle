@@ -16,39 +16,36 @@ const citation = data.citation?.replace('« ', '« ').replace(' »', ' »');
 
 <Layout title={data.metaTitle} description={data.metaDescription} withJsonLd>
   <section class="hero container">
-    <div class="hero-text">
-      <p class="kicker">{site.sousTitre.fr}</p>
-      <h1>{data.title}</h1>
-      <p class="sous-titre">{citation}</p>
-      <WavySeparator color="coral" width={148} />
-      <div class="lead-block">
-        <Content />
-      </div>
-    </div>
-    <div class="hero-art">
-      <img
-        src={site.illustration.src}
-        alt={site.illustration.alt.fr}
-        width={site.illustration.largeur}
-        height={site.illustration.hauteur}
-        loading="eager"
-        fetchpriority="high"
-      />
-    </div>
+    <p class="kicker">{site.sousTitre.fr}</p>
+    <h1>{data.title}</h1>
+    <p class="sous-titre">{citation}</p>
+    <WavySeparator color="coral" width={148} />
   </section>
 
   {
     data.photo && (
-      <section class="ambiance container">
+      <div class="ambiance container">
         <figure class="ambiance-figure">
-          <PhotoSlot image={data.photo} ratio="19 / 10" objectPosition="center 38%" />
+          <PhotoSlot
+            image={data.photo}
+            ratio="19 / 10"
+            objectPosition="center 38%"
+            sizes="(min-width: 1080px) 1000px, 100vw"
+            priority
+          />
         </figure>
-      </section>
+      </div>
     )
   }
 
+  <div class="intro container">
+    <div class="lead-block">
+      <Content />
+    </div>
+  </div>
+
   <section class="toc-section container" aria-labelledby="toc-title">
-    <p class="kicker" id="toc-title">{data.rubriques.sommaire}</p>
+    <h2 class="kicker" id="toc-title">{data.rubriques.sommaire}</h2>
     <ol class="toc">
       {
         data.sommaire.map((item, i) => (
@@ -70,21 +67,10 @@ const citation = data.citation?.replace('« ', '« ').replace(' »', ' »');
 </Layout>
 
 <style>
+  /* Haut de page : kicker, titre et citation sur toute la largeur du
+     contenu, puis la photo juste en dessous, puis le texte d'introduction. */
   .hero {
-    display: grid;
-    gap: 3rem 4.5rem;
-    padding-block: clamp(3rem, 7vw, 5.5rem) clamp(2.5rem, 6vw, 4.5rem);
-    align-items: center;
-  }
-
-  @media (min-width: 900px) {
-    .hero {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    }
-  }
-
-  .hero h1 {
-    max-width: 21ch;
+    padding-block: clamp(2.5rem, 6vw, 4.5rem) 0;
   }
 
   /* Sous-titre : plus petit que le H1, plus grand que le corps de texte */
@@ -95,37 +81,20 @@ const citation = data.citation?.replace('« ', '« ').replace(' »', ' »');
     font-style: italic;
     line-height: 1.5;
     color: var(--brown-soft);
-    max-width: 34ch;
   }
 
-  /* Arche sable : grande forme plate, clin d'œil à la carte de visite */
-  .hero-art {
-    position: relative;
-    padding: 3rem 1.75rem 0;
-  }
-
-  .hero-art::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--sand);
-    border-radius: 999px 999px 16px 16px;
-  }
-
-  .hero-art img {
-    position: relative;
-    width: 100%;
-  }
-
-  /* Grande bande photo, pleine largeur du conteneur */
   .ambiance {
-    margin-block: clamp(1rem, 3vw, 2.5rem) 0;
+    margin-block: clamp(1.75rem, 4vw, 2.75rem) 0;
   }
 
   .ambiance-figure {
     margin: 0;
     border-radius: 14px;
     overflow: hidden;
+  }
+
+  .intro {
+    padding-block: clamp(2.5rem, 6vw, 4rem) 0;
   }
 
   .toc-section {

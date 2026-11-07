@@ -1,5 +1,5 @@
 ---
-metaTitle: À propos — La Fabrique Relationnelle, coaching systémique
+metaTitle: "À propos : Sabine, coach systémique à Aix-en-Provence"
 metaDescription: >-
   La Fabrique Relationnelle : accompagnement systémique inspiré de la thérapie
   brève de Palo Alto. Plus de 25 ans d’expérience à Aix-en-Provence et

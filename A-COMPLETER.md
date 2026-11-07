@@ -36,14 +36,15 @@ Pour remplacer une photo plus tard : déposer un fichier du même nom dans
 Le cadrage à l'intérieur du cadre se règle via `objectPosition` dans la page
 concernée (ex. `objectPosition="center 30%"`).
 
-## 5. Nom de domaine définitif
+## 5. Nom de domaine définitif — FIXÉ ✅
 
-Le domaine envisagé `lafabriquerelationnelle.fr` (à réserver) est utilisé
-comme base des URLs canoniques, du sitemap et des balises hreflang. S'il
-change :
+Le domaine `www.fabrique-relationnelle.com` est la base des URLs canoniques,
+du sitemap et des balises hreflang ; la version sans www redirige en 301
+(`vercel.json`). S'il change :
 
 - **`astro.config.mjs`** → champ `site`.
 - **`public/robots.txt`** → ligne `Sitemap:`.
+- **`vercel.json`** → redirection sans www → www.
 
 ## 6. Image de partage social (og-image)
 
@@ -66,3 +67,13 @@ sur « Tarifs et contact ». Deux meta ont donc été ajustées en conséquence,
 - `src/content/pages/tarifs-et-contact.md` → description « Par e-mail,
   téléphone ou WhatsApp » (le mot « formulaire » a été retiré, ici et dans
   le texte de la page ainsi que dans la section Kontakt allemande).
+
+## 8. Référencement local — deux informations manquantes (TODO)
+
+Dans **`src/data/site.json`** (alimente les données structurées de l'accueil) :
+
+- **`ficheGoogle`** → coller le lien public de la fiche Google Business
+  Profile (ex. `https://maps.app.goo.gl/…`). Il sera ajouté en `sameAs`.
+- **`horaires`** → horaires d'ouverture. Le site indique seulement « du lundi
+  au samedi » ; format attendu, une entrée par plage :
+  `{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday"], "opens": "09:00", "closes": "19:00" }`.

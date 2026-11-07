@@ -30,14 +30,15 @@
     "ville": "Marseille",
     "pays": "FR"
   },
+  "region": "Bouches-du-Rhône",
+  "ficheGoogle": "",
+  "horaires": [],
   "cabinets": [
     {
-      "nom": "Aix-en-Provence",
-      "adresse": "37 traverse de la Magotte, 13090"
+      "nom": "Aix-en-Provence"
     },
     {
-      "nom": "Marseille",
-      "adresse": "44 rue Sainte, 13001"
+      "nom": "Marseille"
     }
   ],
   "visio": {
@@ -58,6 +59,9 @@
       "fr": "Illustration au trait : une personne la main posée sur le cœur, et deux personnes qui se tiennent la main",
       "de": "Strichzeichnung: eine Person mit der Hand auf dem Herzen und zwei Personen, die sich an der Hand halten"
     }
+  },
+  "logo": {
+    "src": "/images/logo.png"
   },
   "photoAmbiance": {
     "src": "/images/accueil-ambiance.jpg",

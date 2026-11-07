@@ -13,3 +13,8 @@ npm-debug.log*
 # L'illustration servie par le site vit dans public/images/illustration.png.
 Récapitulatif final-final.docx
 /illustration.png
+.vercel
+.env*
+
+# Variantes AVIF/WebP générées par scripts/optimize-images.mjs
+/public/images/optim/

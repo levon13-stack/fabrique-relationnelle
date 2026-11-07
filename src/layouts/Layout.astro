@@ -22,27 +22,37 @@ const frUrl = new URL('/', siteUrl);
 const deUrl = new URL('/de/', siteUrl);
 // Image de partage social (1200×630), générée par scripts/generate-og.mjs.
 const ogImage = new URL('/images/og-image.png', siteUrl);
-const fontsHref =
-  'https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700&display=swap';
+const ogImageAlt = `${site.nom} — ${site.sousTitre[lang]}`;
 
-// Données structurées LocalBusiness / ProfessionalService (accueil + page DE),
-// alimentées par src/data/site.json.
+// Données structurées ProfessionalService (accueil + page DE), alimentées
+// par src/data/site.json. Adresse principale : cabinet d'Aix-en-Provence.
+// TODO : renseigner dans site.json « ficheGoogle » (lien de la fiche Google
+// Business Profile → sameAs) et « horaires » (→ openingHoursSpecification).
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
+  '@id': new URL('/#cabinet', siteUrl).toString(),
   name: site.nom,
   description: site.sousTitre[lang],
   url: siteUrl.toString(),
-  image: ogImage.toString(),
+  logo: new URL(site.logo.src, siteUrl).toString(),
+  image: [ogImage.toString(), new URL(site.photoAmbiance.src, siteUrl).toString()],
   telephone: site.telephone.lien.replace('tel:', ''),
+  email: site.email || undefined,
   address: {
     '@type': 'PostalAddress',
     streetAddress: site.adresseAix.rue,
     postalCode: site.adresseAix.codePostal,
     addressLocality: site.adresseAix.ville,
+    addressRegion: site.region,
     addressCountry: site.adresseAix.pays,
   },
-  areaServed: site.cabinets.map((cabinet) => cabinet.nom),
+  areaServed: [
+    ...site.cabinets.map((cabinet) => ({ '@type': 'City', name: cabinet.nom })),
+    { '@type': 'AdministrativeArea', name: site.region },
+  ],
+  sameAs: site.ficheGoogle ? [site.ficheGoogle] : undefined,
+  openingHoursSpecification: site.horaires.length ? site.horaires : undefined,
   knowsLanguage: site.languesParlees,
   priceRange: site.fourchetteTarifs,
 };
@@ -60,16 +70,21 @@ const jsonLd = {
     <link rel="alternate" hreflang="fr" href={lang === 'fr' ? canonical : frUrl} />
     <link rel="alternate" hreflang="de" href={deUrl} />
     <link rel="alternate" hreflang="x-default" href={frUrl} />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#FAF3EA" />
     {noindex && <meta name="robots" content="noindex" />}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href={fontsHref} />
-    <link rel="stylesheet" href={fontsHref} />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/mulish-latin-wght-normal.woff2"
+      crossorigin
+    />
 
     <meta property="og:site_name" content={site.nom} />
     <meta property="og:type" content="website" />
@@ -79,18 +94,20 @@ const jsonLd = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'fr_FR'} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     {withJsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>
     <a class="skip-link" href="#contenu">{ui[lang].skipLink}</a>
     <Header lang={lang} />
-    <main id="contenu">
+    <main id="contenu" tabindex="-1">
       <slot />
     </main>
     <Footer lang={lang} />

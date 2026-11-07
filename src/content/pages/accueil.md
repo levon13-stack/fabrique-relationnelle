@@ -1,5 +1,5 @@
 ---
-metaTitle: La Fabrique Relationnelle — Coaching systémique Aix & Marseille
+metaTitle: "La Fabrique Relationnelle : coaching à Aix-en-Provence"
 metaDescription: >-
   Coaching et accompagnement systémique à Aix-en-Provence, Marseille et en
   visio. Approche brève pour dénouer conflits, mal-être et difficultés
@@ -9,7 +9,7 @@ citation: >-
   « Il n’est pas nécessaire que tout change pour qu’une situation évolue. »
 photo:
   src: /images/accueil-ambiance.jpg
-  alt: Photo d’ambiance du cabinet
+  alt: Sabine dans son cabinet, assise devant une bibliothèque, carnet à la main
 rubriques:
   sommaire: Sommaire
 sommaire:

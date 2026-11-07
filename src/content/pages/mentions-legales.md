@@ -1,8 +1,9 @@
 ---
-metaTitle: Mentions légales — La Fabrique Relationnelle
+metaTitle: "Mentions légales · cabinet de coaching à Aix-en-Provence"
 metaDescription: >-
-  Mentions légales du site de La Fabrique Relationnelle — coaching et
-  accompagnement systémique à Aix-en-Provence et Marseille.
+  Mentions légales du site de La Fabrique Relationnelle, cabinet de coaching
+  et d’accompagnement systémique à Aix-en-Provence et Marseille : éditeur,
+  hébergeur.
 title: Mentions légales
 ---
 

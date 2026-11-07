@@ -1,9 +1,9 @@
 ---
-metaTitle: Mon approche — Coaching bref et systémique | La Fabrique Relationnelle
+metaTitle: "Mon approche : coaching systémique bref à Aix-en-Provence"
 metaDescription: >-
-  Une approche brève et systémique orientée solutions : comprendre ce qui
-  maintient une difficulté aujourd’hui pour ouvrir de nouvelles possibilités
-  de changement.
+  Approche brève et systémique orientée solutions, à Aix-en-Provence et
+  Marseille : comprendre ce qui maintient une difficulté pour ouvrir d’autres
+  possibilités.
 title: Comprendre autrement pour ouvrir de nouvelles possibilités
 kicker: Mon approche
 sections:

@@ -22,28 +22,23 @@ const prixAffiche = (tarif: { prix: string; duree: string }) =>
 
 <Layout title={data.metaTitle} description={data.metaDescription} lang="de" withJsonLd>
   <section class="hero container">
-    <div class="hero-text">
-      <h1>{data.title}</h1>
-      <p class="hero-sub">{data.sousTitre}</p>
-      <WavySeparator color="coral" width={148} />
-    </div>
-    <div class="hero-art">
-      <img
-        src={site.illustration.src}
-        alt={site.illustration.alt.de}
-        width={site.illustration.largeur}
-        height={site.illustration.hauteur}
-        loading="eager"
-        fetchpriority="high"
-      />
-    </div>
+    <h1>{data.title}</h1>
+    <p class="hero-sub">{data.sousTitre}</p>
+    <WavySeparator color="coral" width={148} />
   </section>
 
-  <section class="ambiance container">
+  <div class="ambiance container">
     <figure class="ambiance-figure">
-      <PhotoSlot image={photoAmbiance} ratio="19 / 10" objectPosition="center 38%" lang="de" />
+      <PhotoSlot
+        image={photoAmbiance}
+        ratio="19 / 10"
+        objectPosition="center 38%"
+        lang="de"
+        sizes="(min-width: 1080px) 1000px, 100vw"
+        priority
+      />
     </figure>
-  </section>
+  </div>
 
   <div class="container page-end">
     <section class="split">
@@ -79,17 +74,9 @@ const prixAffiche = (tarif: { prix: string; duree: string }) =>
 </Layout>
 
 <style>
+  /* Titre et sous-titre sur toute la largeur, photo juste en dessous */
   .hero {
-    display: grid;
-    gap: 2.5rem 4rem;
-    padding-block: clamp(3rem, 7vw, 5rem) clamp(2rem, 5vw, 3.5rem);
-    align-items: center;
-  }
-
-  @media (min-width: 900px) {
-    .hero {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    }
+    padding-block: clamp(2.5rem, 6vw, 4.5rem) 0;
   }
 
   .hero-sub {
@@ -97,16 +84,10 @@ const prixAffiche = (tarif: { prix: string; duree: string }) =>
     font-size: clamp(1.15rem, 1.05rem + 0.5vw, 1.35rem);
     font-weight: 300;
     line-height: 1.55;
-    max-width: 34ch;
-  }
-
-  .hero-art img {
-    width: min(100%, 30rem);
-    margin-inline: auto;
   }
 
   .ambiance {
-    margin-block: clamp(0.5rem, 2vw, 1.5rem) clamp(1rem, 3vw, 2rem);
+    margin-block: clamp(1.75rem, 4vw, 2.75rem) clamp(1rem, 3vw, 2rem);
   }
 
   .ambiance-figure {

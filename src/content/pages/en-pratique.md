@@ -1,8 +1,9 @@
 ---
-metaTitle: En pratique — Déroulement des séances | La Fabrique Relationnelle
+metaTitle: "En pratique : séances de coaching à Aix-en-Provence"
 metaDescription: >-
-  Séances de coaching à Aix-en-Provence, Marseille ou en visio. Premier
-  échange de 20 min sans frais. Déroulement et rythme des séances.
+  Séances de coaching à Aix-en-Provence, Marseille ou en visio, du lundi au
+  samedi. Premier échange de 20 min sans frais. Déroulement et rythme des
+  séances.
 title: En pratique
 sections:
   - titre: Un premier échange
